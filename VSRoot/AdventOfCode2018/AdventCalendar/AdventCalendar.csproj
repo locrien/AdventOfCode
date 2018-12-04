@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Challenge.cs" />
     <Compile Include="Challenges\Day1Challenge.cs" />
+    <Compile Include="Challenges\Day3Challenge.cs" />
     <Compile Include="Challenges\Day2Challenge.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\input1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\input3.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

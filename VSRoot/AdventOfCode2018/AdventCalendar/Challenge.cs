@@ -29,7 +29,7 @@ namespace AdventCalendar
                     challenge = new Day2Challenge();
                     break;
                 case 3:
-                    challenge = new Day1Challenge();
+                    challenge = new Day3Challenge();
                     break;
                 case 4:
                     challenge = new Day1Challenge();
