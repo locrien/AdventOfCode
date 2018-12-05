@@ -44,7 +44,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Challenge.cs" />
+    <Compile Include="Challenges\Day11Challenge.cs" />
+    <Compile Include="Challenges\Day12Challenge.cs" />
+    <Compile Include="Challenges\Day13Challenge.cs" />
+    <Compile Include="Challenges\Day14Challenge.cs" />
+    <Compile Include="Challenges\Day15Challenge.cs" />
+    <Compile Include="Challenges\Day16Challenge.cs" />
+    <Compile Include="Challenges\Day17Challenge.cs" />
+    <Compile Include="Challenges\Day18Challenge.cs" />
+    <Compile Include="Challenges\Day19Challenge.cs" />
+    <Compile Include="Challenges\Day20Challenge.cs" />
+    <Compile Include="Challenges\Day21Challenge.cs" />
+    <Compile Include="Challenges\Day22Challenge.cs" />
+    <Compile Include="Challenges\Day23Challenge.cs" />
+    <Compile Include="Challenges\Day24Challenge.cs" />
+    <Compile Include="Challenges\Day25Challenge.cs" />
     <Compile Include="Challenges\Day1Challenge.cs" />
+    <Compile Include="Challenges\Day5Challenge.cs" />
+    <Compile Include="Challenges\Day6Challenge.cs" />
+    <Compile Include="Challenges\Day7Challenge.cs" />
+    <Compile Include="Challenges\Day8Challenge.cs" />
+    <Compile Include="Challenges\Day9Challenge.cs" />
+    <Compile Include="Challenges\Day10Challenge.cs" />
+    <Compile Include="Challenges\Day4Challenge.cs" />
     <Compile Include="Challenges\Day3Challenge.cs" />
     <Compile Include="Challenges\Day2Challenge.cs" />
     <Compile Include="Program.cs" />
@@ -62,6 +84,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\input3.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\input4.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
