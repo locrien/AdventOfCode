@@ -1,11 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace AdventCalendar.Challenges
 {
 	class Day4Challenge : Challenge
 	{
+		private Dictionary<int, Guard> _guards = new Dictionary<int, Guard>();
+
+		class Guard
+		{
+			public int Id;
+			public int[] SleepMinutes;
+		}
 
 		class Record : IComparable<Record>
 		{
@@ -15,25 +25,7 @@ namespace AdventCalendar.Challenges
 
 			public int CompareTo(Record other)
 			{
-				return DateTime.Compare(Timestamp, other.Timestamp);
-			}
-		}
-		class Guard
-		{
-			public int GuardId;
-			public int[] SleepMinutes;
-			public int TotalSleepMinutes;
-
-			private int _sleepMinute = 0;
-
-			public void Sleep(int minute)
-			{
-				_sleepMinute = minute;
-			}
-
-			public void Wake(int minute)
-			{
-				TotalSleepMinutes += minute - _sleepMinute;
+				return DateTime.Compare(Timestamp,other.Timestamp);
 			}
 		}
 
@@ -60,7 +52,7 @@ namespace AdventCalendar.Challenges
 				// parse
 				var separatorSpaceIdx = entry.IndexOf(']') + 1;
 				var leftPart = entry.Substring(0, separatorSpaceIdx);
-				var rightPart = entry.Substring(separatorSpaceIdx + 1);
+				var rightPart = entry.Substring(separatorSpaceIdx+1);
 
 				var expression = new Regex("\\[(?<Year>[0-9]+)-(?<Month>[0-9]+)-(?<Day>[0-9]+) (?<Hour>[0-9]+):(?<Minute>[0-9]+)\\]");
 				var line = leftPart;
@@ -75,11 +67,11 @@ namespace AdventCalendar.Challenges
 
 				var record = new Record();
 				record.Timestamp = dt;
-				if (rightPart.Contains(wakeCommand))
+				if(rightPart.Equals(wakeCommand,StringComparison.Ordinal))
 				{
 					record.Awake = true;
 				}
-				else if (rightPart.Contains(sleepCommand))
+				else if(rightPart.Equals(sleepCommand,StringComparison.Ordinal))
 				{
 					record.Awake = false;
 				}
@@ -102,57 +94,16 @@ namespace AdventCalendar.Challenges
 
 			sortedRecords.Sort();
 
-			int[] currentSleepMinutes = new int[60];
-			bool awake = true;
-			int sleepMinute = 0;
-			int totalSleepTime = 0;
-			int currentGuardId = -1;
-
-			foreach (var record in sortedRecords)
+			foreach(var record in sortedRecords)
 			{
-				if (record.GuardId >= 0)
+				if(record.GuardId >= 0)
 				{
-					// switched guard
-					if (currentGuardId != -1 && totalSleepTime > TotalSleepMinutes)
-					{
-						GuardId = currentGuardId;
-						SleepMinutes = currentSleepMinutes;
-						TotalSleepMinutes = totalSleepTime;
-					}
-
-					currentSleepMinutes = new int[60];
-					currentGuardId = record.GuardId;
-					totalSleepTime = 0;
-					sleepMinute = 0;
+					Guard currentGuard = new Guard();
 				}
-				else if (awake && !record.Awake)
-				{
-					awake = false;
-
-					sleepMinute = record.Timestamp.Minute;
-				}
-				else if (!awake && record.Awake)
-				{
-					awake = true;
-
-					totalSleepTime += record.Timestamp.Minute - sleepMinute;
-					for (int i = sleepMinute; i < record.Timestamp.Minute; ++i)
-					{
-						currentSleepMinutes[i]++;
-					}
-				}
+				
 			}
 
-			int minuteIdx = 0;
-			int highestMinute = 0;
-			for (int i = 0; i < SleepMinutes.Length; ++i)
-			{
-				if (SleepMinutes[i] > highestMinute)
-				{
-					minuteIdx = i;
-				}
-			}
-			return (GuardId * minuteIdx).ToString();
+			return "";
 		}
 
 		protected override string Part2()
