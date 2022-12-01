@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventCalendar.Challenges
 {
-	class Day10Challenge : Challenge
+	class Day18Challenge : Challenge
 	{
 		protected override string Part1()
 		{
