@@ -68,8 +68,7 @@ fn read_data(file_name:&str, is_part_2:bool) -> Vec<(Choice,Choice)>
     let contents = fs::read_to_string(file_name)
     .expect("Should have been able to read the file");
 
-    let content_lines =  contents.lines();
-    let result:Vec<(Choice,Choice)> = content_lines.map(|line| transform_line(line,is_part_2)).collect();
+    let result:Vec<(Choice,Choice)> = contents.lines().map(|line| transform_line(line,is_part_2)).collect();
     return result;
 }
 

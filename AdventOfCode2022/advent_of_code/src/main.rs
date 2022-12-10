@@ -27,6 +27,10 @@ fn main() {
         (3,2) => _ = days::day3::run_part_2("assets/day3.txt"),
         (4,1) => _ = days::day4::run_part_1("assets/day4.txt"),
         (4,2) => _ = days::day4::run_part_2("assets/day4.txt"),
+        (5,1) => _ = days::day5::run_part_1("assets/day5.txt"),
+        (5,2) => _ = days::day5::run_part_2("assets/day5.txt"),
+        (6,1) => _ = days::day6::run_part_1("assets/day6.txt"),
+        (6,2) => _ = days::day6::run_part_2("assets/day6.txt"),
         _ => println!("Invalid day/part"),
     }    
 }

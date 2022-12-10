@@ -1,4 +1,4 @@
-use std::fs;
+use std::{fs, collections::HashSet};
 
 #[cfg(test)]
 mod tests
@@ -15,13 +15,15 @@ mod tests
     #[test]
     fn test_part_1()
     {
-        run_part_1("assets/day3.txt");
+        let expected = 8018;
+        let result = run_part_1("assets/day3.txt");
+        assert_eq!(result,expected);
     }
 
     #[test]
     fn test_part_2_test()
     {
-        let expected = 0;
+        let expected = 70;
         let result = run_part_2("assets/day3_test.txt");
         assert_eq!(result,expected);
     }
@@ -29,48 +31,64 @@ mod tests
     #[test]
     fn test_part_2()
     {
-        run_part_2("assets/day3.txt");
+        let expected = 2518;
+        let result = run_part_2("assets/day3.txt");
+        assert_eq!(result,expected);
     }
 }
 
 struct Rucksack
 {
-    pub left_compartment : String,
-    pub right_compartment: String,
+    pub all : String,
+    pub left : String,
+    pub right: String,
 }
 
-pub fn run_part_1(file_name:&str) -> i32
+pub fn run_part_1(file_name:&str) -> u32
 {
-    let mut rucksacks : Vec<Rucksack> = Vec::new();
-    read_data(file_name, &mut rucksacks);
-
-    let result = 0;
-
-    return 0;
+    let result =  read_data(file_name).iter()
+        .map(|sack| { find_error(sack) })
+        .map(|error| {calculate_priority(&error) }).sum();
     
+    println!("{}", result);
+
+    return result;
 }
 
-pub fn run_part_2(file_name:&str) -> i32
+pub fn run_part_2(file_name:&str) -> u32
 {
-    let mut rucksacks : Vec<Rucksack> = Vec::new();
-    read_data(file_name, &mut rucksacks);
+    let result:u32 = read_data(file_name).chunks(3)
+        .map(|g| {find_common_item(&g[0],&g[1],&g[2])})
+        .map(|common| {calculate_priority(&common) }).sum();
 
-    let result = 0;
-    println!("sum of top 3 : {}", result);
+    println!("{}", result);
 
-    return 0;
+    return result;
 }
 
-fn read_data(file_name:&str, rucksacks: &mut Vec<Rucksack>)
+fn read_data(file_name:&str) -> Vec<Rucksack>
 {
     let contents = fs::read_to_string(file_name)
         .expect("Should have been able to read the file");
 
-    let rucksack  = Rucksack
+    return contents.lines().map(line_to_rucksack).collect();
+}
+
+fn line_to_rucksack(line:&str) -> Rucksack
+{
+    let split_line = line.split_at(line.len()/2);
+
+    return Rucksack
     {
-        left_compartment : "".to_string(),
-        right_compartment : "".to_string(),
+        left : split_line.0.to_string(),
+        right :split_line.1.to_string(),
+        all : line.to_string(),
     };
+}
+
+fn find_error(rucksack:&Rucksack) -> char
+{
+    return rucksack.left.chars().find(|x| {rucksack.right.contains(*x) }).expect("no errors found");
 }
 
 fn calculate_priority(item: &char) -> u32
@@ -82,4 +100,16 @@ fn calculate_priority(item: &char) -> u32
         true => priority,
         false => priority + 26,
     };
+}
+
+fn find_common_item(g1:&Rucksack,g2:&Rucksack,g3:&Rucksack) -> char
+{
+    let h1: HashSet<char> = HashSet::from_iter(g1.all.chars());
+    let h2: HashSet<char> = HashSet::from_iter(g2.all.chars());
+    let h3: HashSet<char> = HashSet::from_iter(g3.all.chars());
+
+    let result: Vec<char> = h1.intersection(&h2).cloned().collect::<HashSet<char>>()
+        .intersection(&h3).cloned().collect();
+
+    return *result.get(0).expect("no common found");
 }
