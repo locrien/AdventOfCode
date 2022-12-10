@@ -63,17 +63,7 @@ struct Rucksack
     pub right: String,
 }
 
-pub fn run(input:String, part: u32)
-{
-    match part
-    {
-        1 => _ = run_part_1(input),
-        2 => _ = run_part_2(input),
-        _ => println!("Invalid part"),
-    }
-}
-
-fn run_part_1(input:String) -> u32
+pub fn run_part_1(input:String) -> u32
 {
     let result =  read_data(input).iter()
         .map(|sack| { find_error(sack) })
@@ -84,7 +74,7 @@ fn run_part_1(input:String) -> u32
     return result;
 }
 
-fn run_part_2(input:String) -> u32
+pub fn run_part_2(input:String) -> u32
 {
     let result:u32 = read_data(input).chunks(3)
         .map(|g| {find_common_item(&g[0],&g[1],&g[2])})

@@ -63,17 +63,7 @@ enum Choice
     Invalid,
 }
 
-pub fn run(input:String, part: u32)
-{
-    match part
-    {
-        1 => _ = run_part_1(input),
-        2 => _ = run_part_2(input),
-        _ => println!("Invalid part"),
-    }
-}
-
-fn run_part_1(input:String) -> u32
+pub fn run_part_1(input:String) -> u32
 {
     let result = read_data(input,false);
     let total_score:u32 = result.iter().map(|round| calculate_score(round)).sum();
@@ -82,7 +72,7 @@ fn run_part_1(input:String) -> u32
     return total_score;
 }
 
-fn run_part_2(input:String) -> u32
+pub fn run_part_2(input:String) -> u32
 {
     let result = read_data(input,true);
     let total_score:u32 = result.iter().map(|round| calculate_score(round)).sum();

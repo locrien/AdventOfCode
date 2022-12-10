@@ -14,7 +14,7 @@ mod tests
         let input = fs::read_to_string(TEST_FILE_NAME)
         .expect("Should have been able to read the file");
 
-        let expected = 24000;
+        let expected = 95437;
         let result = run_part_1(input);
         assert_eq!(result,expected);
     }
@@ -54,22 +54,12 @@ mod tests
 }
 
 // ----------------------------
-pub fn run(input:String, part: u32)
-{
-    match part
-    {
-        1 => _ = run_part_1(input),
-        2 => _ = run_part_2(input),
-        _ => println!("Invalid part"),
-    }
-}
-
-fn run_part_1(input:String) -> u32
+pub fn run_part_1(_input:String) -> u32
 {
     return 0;
 }
 
-fn run_part_2(input:String) -> u32
+pub fn run_part_2(_input:String) -> u32
 {
     return 0;
 }

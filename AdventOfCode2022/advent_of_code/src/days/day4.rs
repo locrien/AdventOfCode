@@ -55,17 +55,7 @@ mod tests
     }
 }
 
-pub fn run(input:String, part: u32)
-{
-    match part
-    {
-        1 => _ = run_part_1(input),
-        2 => _ = run_part_2(input),
-        _ => println!("Invalid part"),
-    }
-}
-
-fn run_part_1(input:String) -> u32
+pub fn run_part_1(input:String) -> u32
 {
     let data = read_data(input);
 
@@ -83,7 +73,7 @@ fn run_part_1(input:String) -> u32
     return amount;
 }
 
-fn run_part_2(input:String) -> u32
+pub fn run_part_2(input:String) -> u32
 {
     let data = read_data(input);
 

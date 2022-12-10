@@ -64,17 +64,7 @@ struct Instruction
     pub to:u32,
 }
 
-pub fn run(input:String, part: u32)
-{
-    match part
-    {
-        1 => _ = run_part_1(input),
-        2 => _ = run_part_2(input),
-        _ => println!("Invalid part"),
-    }
-}
-
-fn run_part_1(input:String) -> String
+pub fn run_part_1(input:String) -> String
 {
     let mut crate_stacks:HashMap<u32,Vec<char>> = HashMap::<u32, Vec<char>>::new();
     let mut instructions:Vec<Instruction> = Vec::new();
@@ -95,7 +85,7 @@ fn run_part_1(input:String) -> String
     return result;
 }
 
-fn run_part_2(input:String) -> String
+pub fn run_part_2(input:String) -> String
 {
     let mut crate_stacks:HashMap<u32,Vec<char>> = HashMap::<u32, Vec<char>>::new();
     let mut instructions:Vec<Instruction> = Vec::new();

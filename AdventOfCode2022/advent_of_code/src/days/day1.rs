@@ -9,7 +9,7 @@ mod tests
     const DAY: u32= 1;
     const FILE_NAME: &str = formatcp!("assets/day{DAY}.txt");
     const TEST_FILE_NAME: &str = formatcp!("assets/tests/day{DAY}.txt");
-    
+
     #[test]
     fn part_1_example()
     {
@@ -55,17 +55,7 @@ mod tests
     }
 }
 
-pub fn run(input:String, part: u32)
-{
-    match part
-    {
-        1 => _ = run_part_1(input),
-        2 => _ = run_part_2(input),
-        _ => println!("Invalid part"),
-    }
-}
-
-fn run_part_1(input:String) -> u32
+pub fn run_part_1(input:String) -> u32
 {
     let mut calories : Vec<u32> = Vec::new();
     read_calories(input, &mut calories);
@@ -76,7 +66,7 @@ fn run_part_1(input:String) -> u32
     return result;
 }
 
-fn run_part_2(input:String) -> u32
+pub fn run_part_2(input:String) -> u32
 {
     let mut calories : Vec<u32> = Vec::new();
     read_calories(input, &mut calories);
