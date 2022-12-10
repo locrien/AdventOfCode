@@ -1,42 +1,57 @@
-use std::{fs, collections::HashMap};
-
+use std::collections::HashMap;
 use regex::Regex;
 
 #[cfg(test)]
 mod tests
 {
     use super::*;
-    #[test]
-    fn test_part_1_test()
-    {
-        let expected:&str = "CMZ";
-        let result = run_part_1("assets/day5_test.txt");
-        assert_eq!(result,expected);
+    use std::fs;
+    use const_format::formatcp;
 
-        // output the top of each stack
+    const DAY: u32= 5;
+    const FILE_NAME: &str = formatcp!("assets/day{DAY}.txt");
+    const TEST_FILE_NAME: &str = formatcp!("assets/tests/day{DAY}.txt");
+    #[test]
+    fn part_1_example()
+    {
+        let input = fs::read_to_string(TEST_FILE_NAME)
+        .expect("Should have been able to read the file");
+
+        let expected = "CMZ";
+        let result = run_part_1(input);
+        assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_1()
+    fn part_1()
     {
+        let input = fs::read_to_string(FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = "CWMTGHBDW";
-        let result = run_part_1("assets/day5.txt");
+        let result = run_part_1(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_2_test()
+    fn part_2_example()
     {
+        let input = fs::read_to_string(TEST_FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = "MCD";
-        let result = run_part_2("assets/day5_test.txt");
+        let result = run_part_2(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_2()
+    fn part_2()
     {
+        let input = fs::read_to_string(FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = "SSCGWJCRB";
-        let result = run_part_2("assets/day5.txt");
+        let result = run_part_2(input);
         assert_eq!(result,expected);
     }
 }
@@ -49,11 +64,21 @@ struct Instruction
     pub to:u32,
 }
 
-pub fn run_part_1(file_name:&str) -> String
+pub fn run(input:String, part: u32)
+{
+    match part
+    {
+        1 => _ = run_part_1(input),
+        2 => _ = run_part_2(input),
+        _ => println!("Invalid part"),
+    }
+}
+
+fn run_part_1(input:String) -> String
 {
     let mut crate_stacks:HashMap<u32,Vec<char>> = HashMap::<u32, Vec<char>>::new();
     let mut instructions:Vec<Instruction> = Vec::new();
-    read_data(file_name, &mut crate_stacks, &mut instructions);
+    read_data(input, &mut crate_stacks, &mut instructions);
 
     for instruction in instructions
     {
@@ -70,11 +95,11 @@ pub fn run_part_1(file_name:&str) -> String
     return result;
 }
 
-pub fn run_part_2(file_name:&str) -> String
+fn run_part_2(input:String) -> String
 {
     let mut crate_stacks:HashMap<u32,Vec<char>> = HashMap::<u32, Vec<char>>::new();
     let mut instructions:Vec<Instruction> = Vec::new();
-    read_data(file_name, &mut crate_stacks, &mut instructions);
+    read_data(input, &mut crate_stacks, &mut instructions);
 
     for instruction in instructions
     {
@@ -127,12 +152,9 @@ fn apply_instruction(instr:Instruction, stacks: &mut HashMap<u32,Vec<char>>, is_
     }
 }
 
-fn read_data(file_name:&str, starting_state: &mut HashMap<u32,Vec<char>>, instructions: &mut Vec<Instruction>)
+fn read_data(input:String, starting_state: &mut HashMap<u32,Vec<char>>, instructions: &mut Vec<Instruction>)
 {
-    let contents = fs::read_to_string(file_name)
-        .expect("Should have been able to read the file");
-
-    let split_content= contents.split("\r\n\r\n").collect::<Vec<&str>>();
+    let split_content= input.split("\r\n\r\n").collect::<Vec<&str>>();
 
     let mut rev_lines = split_content[0].lines().collect::<Vec<&str>>();
     let spots:&str = rev_lines.pop().expect("msg");

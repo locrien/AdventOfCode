@@ -1,38 +1,56 @@
-use std::fs;
+
 
 #[cfg(test)]
 mod tests
 {
     use super::*;
+    use const_format::formatcp;
+    use std::fs;
+
+    const DAY: u32= 2;
+    const FILE_NAME: &str = formatcp!("assets/day{DAY}.txt");
+    const TEST_FILE_NAME: &str = formatcp!("assets/tests/day{DAY}.txt");
     #[test]
-    fn test_part_1_test()
+    fn part_1_example()
     {
+        let input = fs::read_to_string(TEST_FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 15;
-        let result = run_part_1("assets/day2_test.txt");
+        let result = run_part_1(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_1()
+    fn part_1()
     {
+        let input = fs::read_to_string(FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 11767;
-        let result = run_part_1("assets/day2.txt");
+        let result = run_part_1(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_2_test()
+    fn part_2_example()
     {
+        let input = fs::read_to_string(TEST_FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 12;
-        let result = run_part_2("assets/day2_test.txt");
+        let result = run_part_2(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_2()
+    fn part_2()
     {
+        let input = fs::read_to_string(FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 13886;
-        let result = run_part_2("assets/day2.txt");
+        let result = run_part_2(input);
         assert_eq!(result,expected);
     }
 }
@@ -45,30 +63,37 @@ enum Choice
     Invalid,
 }
 
-pub fn run_part_1(file_name:&str) -> u32
+pub fn run(input:String, part: u32)
 {
-    let result = read_data(file_name,false);
+    match part
+    {
+        1 => _ = run_part_1(input),
+        2 => _ = run_part_2(input),
+        _ => println!("Invalid part"),
+    }
+}
+
+fn run_part_1(input:String) -> u32
+{
+    let result = read_data(input,false);
     let total_score:u32 = result.iter().map(|round| calculate_score(round)).sum();
     println!("score : {}", total_score);
 
     return total_score;
 }
 
-pub fn run_part_2(file_name:&str) -> u32
+fn run_part_2(input:String) -> u32
 {
-    let result = read_data(file_name,true);
+    let result = read_data(input,true);
     let total_score:u32 = result.iter().map(|round| calculate_score(round)).sum();
     println!("score : {}", total_score);
 
     return total_score;
 }
 
-fn read_data(file_name:&str, is_part_2:bool) -> Vec<(Choice,Choice)>
+fn read_data(input:String, is_part_2:bool) -> Vec<(Choice,Choice)>
 {
-    let contents = fs::read_to_string(file_name)
-    .expect("Should have been able to read the file");
-
-    let result:Vec<(Choice,Choice)> = contents.lines().map(|line| transform_line(line,is_part_2)).collect();
+    let result:Vec<(Choice,Choice)> = input.lines().map(|line| transform_line(line,is_part_2)).collect();
     return result;
 }
 

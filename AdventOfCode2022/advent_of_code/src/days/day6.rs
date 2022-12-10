@@ -1,53 +1,79 @@
-use std::{fs, collections::HashSet};
+use std::collections::HashSet;
 
 #[cfg(test)]
 mod tests
 {
     use super::*;
+    use const_format::formatcp;
+    use std::fs;
+
+    const DAY: u32= 6;
+    const FILE_NAME: &str = formatcp!("assets/day{DAY}.txt");
+    const TEST_FILE_NAME: &str = formatcp!("assets/tests/day{DAY}.txt");
     #[test]
-    fn test_part_1_test()
+    fn part_1_example()
     {
+        let input = fs::read_to_string(TEST_FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 7;
-        let result = run_part_1("assets/day6_test.txt");
+        let result = run_part_1(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_1()
+    fn part_1()
     {
+        let input = fs::read_to_string(FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 1198;
-        let result = run_part_1("assets/day6.txt");
+        let result = run_part_1(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_2_test()
+    fn part_2_example()
     {
+        let input = fs::read_to_string(TEST_FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 19;
-        let result = run_part_2("assets/day6_test.txt");
+        let result = run_part_2(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_2()
+    fn part_2()
     {
+        let input = fs::read_to_string(FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 3120;
-        let result = run_part_2("assets/day6.txt");
+        let result = run_part_2(input);
         assert_eq!(result,expected);
     }
 }
 
 // ----------------------------
-
-
-pub fn run_part_1(file_name:&str) -> u32
+pub fn run(input:String, part: u32)
 {
-    return find_position(read_data(file_name).as_str(), 4);
+    match part
+    {
+        1 => _ = run_part_1(input),
+        2 => _ = run_part_2(input),
+        _ => println!("Invalid part"),
+    }
 }
 
-pub fn run_part_2(file_name:&str) -> u32
+fn run_part_1(input:String) -> u32
 {
-    return find_position(read_data(file_name).as_str(), 14);
+    return find_position(input.as_str(), 4);
+}
+
+fn run_part_2(input:String) -> u32
+{
+    return find_position(input.as_str(), 14);
 }
 
 fn find_position(input: &str, length:usize) -> u32
@@ -57,10 +83,4 @@ fn find_position(input: &str, length:usize) -> u32
     .expect("") as u32;
 
     return idx + length as u32;
-}
-
-fn read_data(file_name:&str) -> String
-{
-    return fs::read_to_string(file_name)
-    .expect("Should have been able to read the file");
 }

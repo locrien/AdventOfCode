@@ -1,46 +1,73 @@
-use std::{fs, ops::Range};
+use std::ops::Range;
 
 #[cfg(test)]
 mod tests
 {
     use super::*;
+    use std::fs;
+    use const_format::formatcp;
+
+    const DAY: u32= 4;
+    const FILE_NAME: &str = formatcp!("assets/day{DAY}.txt");
+    const TEST_FILE_NAME: &str = formatcp!("assets/tests/day{DAY}.txt");
     #[test]
-    fn test_part_1_test()
+    fn part_1_example()
     {
+        let input = fs::read_to_string(TEST_FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 2;
-        let result = run_part_1("assets/day4_test.txt");
+        let result = run_part_1(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_1()
+    fn part_1()
     {
+        let input = fs::read_to_string(FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 503;
-        let result = run_part_1("assets/day4.txt");
+        let result = run_part_1(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_2_test()
+    fn part_2_example()
     {
+        let input = fs::read_to_string(TEST_FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 4;
-        let result = run_part_2("assets/day4_test.txt");
+        let result = run_part_2(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_2()
+    fn part_2()
     {
+        let input = fs::read_to_string(FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 827;
-        let result = run_part_2("assets/day4.txt");
+        let result = run_part_2(input);
         assert_eq!(result,expected);
     }
 }
 
-
-pub fn run_part_1(file_name:&str) -> u32
+pub fn run(input:String, part: u32)
 {
-    let data = read_data(file_name);
+    match part
+    {
+        1 => _ = run_part_1(input),
+        2 => _ = run_part_2(input),
+        _ => println!("Invalid part"),
+    }
+}
+
+fn run_part_1(input:String) -> u32
+{
+    let data = read_data(input);
 
     let mut amount = 0;
     for pair in data
@@ -56,9 +83,9 @@ pub fn run_part_1(file_name:&str) -> u32
     return amount;
 }
 
-pub fn run_part_2(file_name:&str) -> u32
+fn run_part_2(input:String) -> u32
 {
-    let data = read_data(file_name);
+    let data = read_data(input);
 
     let mut amount = 0;
     for pair in data
@@ -76,12 +103,9 @@ pub fn run_part_2(file_name:&str) -> u32
     return amount;
 }
 
-fn read_data(file_name:&str) -> Vec<(Range<u32>,Range<u32>)>
+fn read_data(input:String) -> Vec<(Range<u32>,Range<u32>)>
 {
-    let contents = fs::read_to_string(file_name)
-        .expect("Should have been able to read the file");
-
-    return contents.lines().map(|x| read_pair(x)).collect();    
+    return input.lines().map(|x| read_pair(x)).collect();    
 }
 
 fn read_pair(pair_line:&str) -> (Range<u32>,Range<u32>)

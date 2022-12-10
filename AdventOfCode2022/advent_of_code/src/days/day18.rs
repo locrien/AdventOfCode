@@ -1,15 +1,13 @@
-
 #[cfg(test)]
 mod tests
 {
     use super::*;
-    use const_format::formatcp;
     use std::fs;
+    use const_format::formatcp;
 
-    const DAY: u32= 1;
+    const DAY: u32= 18;
     const FILE_NAME: &str = formatcp!("assets/day{DAY}.txt");
     const TEST_FILE_NAME: &str = formatcp!("assets/tests/day{DAY}.txt");
-    
     #[test]
     fn part_1_example()
     {
@@ -55,6 +53,7 @@ mod tests
     }
 }
 
+// ----------------------------
 pub fn run(input:String, part: u32)
 {
     match part
@@ -67,40 +66,10 @@ pub fn run(input:String, part: u32)
 
 fn run_part_1(input:String) -> u32
 {
-    let mut calories : Vec<u32> = Vec::new();
-    read_calories(input, &mut calories);
-    
-    let result = *calories.last().expect("No elements found");
-    println!("Elf with most calories transported : {}", result);
-
-    return result;
+    return 0;
 }
 
 fn run_part_2(input:String) -> u32
 {
-    let mut calories : Vec<u32> = Vec::new();
-    read_calories(input, &mut calories);
-
-    let result = calories[&calories.len()-3..].iter().sum::<u32>();
-    println!("sum of top 3 : {}", result);
-
-    return result;
-}
-
-fn read_calories(input:String, calories: &mut Vec<u32>)
-{
-    calories.push(0);
-
-    for line in input.lines() 
-    {
-        let last_idx = calories.len();
-
-        match line.trim().parse::<u32>() 
-        {
-            Ok(num) => {calories[last_idx-1] += num},
-            Err(_why) => calories.push(0),
-        }
-    }
-
-    calories.sort();
+    return 0;
 }

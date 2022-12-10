@@ -1,38 +1,57 @@
-use std::{fs, collections::HashSet};
+use std::collections::HashSet;
 
 #[cfg(test)]
 mod tests
 {
     use super::*;
+    use const_format::formatcp;
+    use std::fs;
+
+    const DAY: u32= 3;
+    const FILE_NAME: &str = formatcp!("assets/day{DAY}.txt");
+    const TEST_FILE_NAME: &str = formatcp!("assets/tests/day{DAY}.txt");
+
     #[test]
-    fn test_part_1_test()
+    fn part_1_example()
     {
+        let input = fs::read_to_string(TEST_FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 157;
-        let result = run_part_1("assets/day3_test.txt");
+        let result = run_part_1(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_1()
+    fn part_1()
     {
+        let input = fs::read_to_string(FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 8018;
-        let result = run_part_1("assets/day3.txt");
+        let result = run_part_1(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_2_test()
+    fn part_2_example()
     {
+        let input = fs::read_to_string(TEST_FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 70;
-        let result = run_part_2("assets/day3_test.txt");
+        let result = run_part_2(input);
         assert_eq!(result,expected);
     }
 
     #[test]
-    fn test_part_2()
+    fn part_2()
     {
+        let input = fs::read_to_string(FILE_NAME)
+        .expect("Should have been able to read the file");
+
         let expected = 2518;
-        let result = run_part_2("assets/day3.txt");
+        let result = run_part_2(input);
         assert_eq!(result,expected);
     }
 }
@@ -44,9 +63,19 @@ struct Rucksack
     pub right: String,
 }
 
-pub fn run_part_1(file_name:&str) -> u32
+pub fn run(input:String, part: u32)
 {
-    let result =  read_data(file_name).iter()
+    match part
+    {
+        1 => _ = run_part_1(input),
+        2 => _ = run_part_2(input),
+        _ => println!("Invalid part"),
+    }
+}
+
+fn run_part_1(input:String) -> u32
+{
+    let result =  read_data(input).iter()
         .map(|sack| { find_error(sack) })
         .map(|error| {calculate_priority(&error) }).sum();
     
@@ -55,9 +84,9 @@ pub fn run_part_1(file_name:&str) -> u32
     return result;
 }
 
-pub fn run_part_2(file_name:&str) -> u32
+fn run_part_2(input:String) -> u32
 {
-    let result:u32 = read_data(file_name).chunks(3)
+    let result:u32 = read_data(input).chunks(3)
         .map(|g| {find_common_item(&g[0],&g[1],&g[2])})
         .map(|common| {calculate_priority(&common) }).sum();
 
@@ -66,12 +95,9 @@ pub fn run_part_2(file_name:&str) -> u32
     return result;
 }
 
-fn read_data(file_name:&str) -> Vec<Rucksack>
+fn read_data(input:String) -> Vec<Rucksack>
 {
-    let contents = fs::read_to_string(file_name)
-        .expect("Should have been able to read the file");
-
-    return contents.lines().map(line_to_rucksack).collect();
+    return input.lines().map(line_to_rucksack).collect();
 }
 
 fn line_to_rucksack(line:&str) -> Rucksack

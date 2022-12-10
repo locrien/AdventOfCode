@@ -1,5 +1,5 @@
 [package]
-name = "hello_world"
+name = "advent_of_code"
 version = "0.1.0"
 edition = "2021"
 
@@ -9,3 +9,4 @@ edition = "2021"
 time = "0.3.17"
 regex = "1.7.0"
 rand = "0.8.5"
+const_format = "0.2.30"
