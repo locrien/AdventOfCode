@@ -1,3 +1,5 @@
+use std::collections::VecDeque;
+
 #[cfg(test)]
 mod tests
 {
@@ -54,12 +56,65 @@ mod tests
 }
 
 // ----------------------------
+
+enum InstructionType
+{
+    Noop,
+    Addx(i32)
+}
+
+struct Instruction
+{
+    pub instr_type:InstructionType,
+    pub cycles:i32,
+}
+
 pub fn run_part_1(_input:String) -> u32
 {
+    let mut x = 1;
+    let mut cycle = 1;
+    let mut pending_ops:Vec<Instruction> = Vec::new();
+    // add new instructions
+
+    // process cycle
+
+
+    
+
     return 0;
 }
 
 pub fn run_part_2(_input:String) -> u32
 {
     return 0;
+}
+
+fn process_data(input: String) -> Result<Vec<Instruction>>
+{
+    return input.lines().map(|l| {  })
+}
+
+fn line_to_instruction(line:&str) -> Result<Instruction,Err>
+{
+    if line.starts_with("noop")
+    {
+        return Ok(Instruction 
+            {
+                cycles : 1,
+                instr_type : InstructionType::Noop,
+            });
+    }
+    else if line.starts_with("addx")
+    {
+        let amount = line.split(" ").last().unwrap().parse().unwrap();
+        return Ok(Instruction 
+            {
+                cycles : 2,
+                instr_type : InstructionType::Addx(amount),
+            });
+    }
+    else 
+    {
+        return Err;
+    }
 }
