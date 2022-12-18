@@ -57,7 +57,7 @@ struct Directory<'a>
 {
     pub name:&'static str,
     parent:&'a  Directory<'a>,
-    sub_content:Vec<&'a dyn Content>,
+    //sub_content:Vec<&'a dyn Content>,
 }
 
 struct File<'a>
@@ -71,8 +71,8 @@ trait Content
 {
     fn name(&self) -> &'static str;
 
-    fn Size(&self) -> u32;
-    fn GetParent(&self) -> &Directory;
+    fn size(&self) -> u32;
+    fn get_parent(&self) -> &Directory;
 }
 
 impl Content for Directory<'_>
@@ -81,12 +81,12 @@ impl Content for Directory<'_>
         self.name
     }
 
-    fn Size(&self) -> u32
+    fn size(&self) -> u32
     {
         return 0;
     }
 
-    fn GetParent(&self) -> &Directory {
+    fn get_parent(&self) -> &Directory {
         return self.parent;
     }
 }
@@ -97,12 +97,12 @@ impl Content for File<'_>
         self.name
     }
 
-    fn Size(&self) -> u32
+    fn size(&self) -> u32
     {
         return self.size;
     }
 
-    fn GetParent(&self) -> &Directory {
+    fn get_parent(&self) -> &Directory {
         return self.parent;
     }
 }
